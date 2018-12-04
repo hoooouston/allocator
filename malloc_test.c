@@ -14,7 +14,7 @@ int main(void)
 	//On our embedded platform, this will be the RAM address for your pool and the size you desire.
 	malloc_addblock(my_block, MALLOC_SIZE);
 
-	void * t1 = fl_malloc(100);
+	void *t1 = fl_malloc(100);
 	printf("Malloc'd from free list: %p\n", t1);
 
 	void * t2 = fl_malloc(4 * 1024);
@@ -28,8 +28,11 @@ int main(void)
 
 	printf("Malloc'd from free list: %p\n", t1);
 
+	fl_realloc(my_block, MALLOC_SIZE);
+
 	fl_free(t2), t2 = NULL;
 	fl_free(t1), t1 = NULL;
 
 	free(my_block);
+	getch();
 }

@@ -32,10 +32,6 @@ typedef struct {
 // We are enforcing a minimum allocation size of 32B.
 #define MIN_ALLOC_SZ ALLOC_HEADER_SZ + 32
 
-#pragma mark - Prototypes -
-
-static void defrag_free_list(void);
-
 #pragma mark - Declarations -
 
 // This macro simply declares and initializes our linked list
@@ -65,6 +61,7 @@ void defrag_free_list(void)
 		}
 		lb = b;
 	}
+	printf("Defragged!\n");
 }
 
 #pragma mark - APIs -
@@ -151,3 +148,19 @@ void malloc_addblock(void *addr, size_t size)
 	//and now our giant block of memory is added to the list!
 	list_add(&blk->node, &free_list);
 }
+
+void fl_realloc(void *addr, size_t size) {
+	alloc_node_t *blk;
+
+	void *new = malloc(size);
+	if (!addr){
+		malloc_addblock(new, size);
+	}
+	else{
+		malloc_addblock(new, size);
+		memcpy(new, addr, sizeof(addr));	
+	}
+		printf("Reallocated a block on the host, pointer: %p, size %d\n", new, size);
+	return;
+}
+

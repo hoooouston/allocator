@@ -10,6 +10,8 @@ extern "C" {
 /**
 * Initialize malloc with a memory address and pool size
 */
+void defrag_free_list(void);
+void fl_realloc(void *addr, size_t size);
 void malloc_addblock(void *addr, size_t size);
 
 /**
